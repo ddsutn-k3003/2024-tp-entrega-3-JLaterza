@@ -43,4 +43,7 @@ public class TemperaturaRepository {
         return temperaturasById;
     }
 
+    public void purgar(){
+        this.temperaturas.clear();
+    }
 }

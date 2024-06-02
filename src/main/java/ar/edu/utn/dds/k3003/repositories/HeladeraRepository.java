@@ -75,4 +75,8 @@ public class HeladeraRepository {
         );
     }
 
+    public void purgar(){
+        this.heladeras.clear();
+    }
+
 }

@@ -2,9 +2,7 @@ package ar.edu.utn.dds.k3003.app;
 
 import ar.edu.utn.dds.k3003.clients.ViandasProxy;
 import ar.edu.utn.dds.k3003.facades.dtos.Constants;
-import ar.edu.utn.dds.k3003.presentation.HeladerasController;
-import ar.edu.utn.dds.k3003.presentation.TemperaturasController;
-import ar.edu.utn.dds.k3003.presentation.ViandasController;
+import ar.edu.utn.dds.k3003.presentation.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -35,6 +33,8 @@ public class WebApp {
         var heladerasController = new HeladerasController(fachada);
         var viandasController = new ViandasController(fachada);
         var temperaturasController = new TemperaturasController(fachada);
+        var mockerController = new MockerController(fachada);
+        var purgarController = new PurgarController(fachada);
 
         // HeladerasController
         app.post("/heladeras", heladerasController::agregar);
@@ -48,6 +48,14 @@ public class WebApp {
 
         app.post("/temperaturas", temperaturasController::registrarTemperatura);
         app.get("/heladeras/{heladeraId}/temperaturas", temperaturasController::obtenerTemperaturas);
+
+        // MockController
+        app.post("/mockheladeras", mockerController::mockHeladeras);
+        app.post("/mocktemperaturas", mockerController::mockTemperaturas);
+
+        // PugarController
+        app.post("/purgar", purgarController::purgar);
+
 
         app.get("/", ctx -> ctx.result("Hola, soy una API y no un easter egg."));
     }

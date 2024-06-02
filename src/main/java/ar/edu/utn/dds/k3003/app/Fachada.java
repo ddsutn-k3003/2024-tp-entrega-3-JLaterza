@@ -99,6 +99,11 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaHeladeras{
         );
     }
 
+    public void purgarTodo(){
+        this.heladeraRepository.purgar();
+        this.temperaturaRepository.purgar();
+    }
+
     @Override
     public void setViandasProxy(FachadaViandas viandas) {
         this.fachadaViandas = viandas;
