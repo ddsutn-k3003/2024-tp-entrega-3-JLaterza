@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -16,26 +18,39 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
+@Entity
+@Table(name = "heladeras")
 public class Heladera {
 
     @Min(0)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
+    @Column
     private String nombre;
 
     @Min(0)
+    @Column
     private Integer cantidadDeViandas;
 
-    private final LocalDateTime fechaDeFuncionamiento;
+    @Column(columnDefinition = "DATE")
+    private LocalDateTime fechaDeFuncionamiento;
 
+    @Column
     private Boolean estadoOperacional;
 
+    @Column
     private Float ultimaTemperaturaRegistrada;
 
+    @Column(columnDefinition = "DATE")
     private LocalDateTime ultimaApertura;
+
+    @Transient
     private Movimientos ultimoMovimiento;
 
+    public Heladera(){};
 
     public Heladera(
             Integer id,
