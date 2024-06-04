@@ -9,24 +9,23 @@ import java.util.List;
 
 public class TemperaturaMapper {
 
-    public TemperaturaDTO map(Temperatura temperatura){
+    public TemperaturaDTO map(Temperatura temperatura, Integer heladeraId){
         return new TemperaturaDTO(
                 temperatura.getTemperatura(),
-                temperatura.getHeladeraId(),
+                heladeraId,
                 temperatura.getFechaMedicion());
     }
 
     public Temperatura map(TemperaturaDTO temperaturaDTO){
         return new Temperatura(
                 temperaturaDTO.getTemperatura(),
-                temperaturaDTO.getHeladeraId(),
                 temperaturaDTO.getFechaMedicion()
         );
     }
 
-    public List<TemperaturaDTO> convertirATemperaturasDTO(List<Temperatura> temperaturas) {
+    public List<TemperaturaDTO> convertirATemperaturasDTO(List<Temperatura> temperaturas, Integer heladeraId) {
         return temperaturas.stream()
-                .map(this::map)
+                .map(temperatura -> map(temperatura, heladeraId))
                 .collect(Collectors.toList());
     }
 

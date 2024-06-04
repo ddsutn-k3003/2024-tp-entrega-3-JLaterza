@@ -13,6 +13,7 @@ import javax.validation.ValidatorFactory;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Set;
 
 @Getter
@@ -47,10 +48,13 @@ public class Heladera {
     @Column(columnDefinition = "DATE")
     private LocalDateTime ultimaApertura;
 
-    @Transient
+    @Enumerated(EnumType.STRING)
     private Movimientos ultimoMovimiento;
 
-    public Heladera(){};
+    @Transient
+    private ArrayList<Temperatura> temperaturas;
+
+    public Heladera(){}
 
     public Heladera(
             Integer id,
@@ -73,7 +77,12 @@ public class Heladera {
         this.ultimaTemperaturaRegistrada = null;
         this.ultimaApertura = null;
         this.ultimoMovimiento = Movimientos.SIN_MOVIMIENTOS;
+        this.temperaturas = new ArrayList<>();
         validate();
+    }
+
+    public void agregarTemperatura(Temperatura temperatura) {
+        this.temperaturas.add(0, temperatura);
     }
 
     // Otra pequeña gran decision de diseño...

@@ -110,7 +110,7 @@ public class FachadaTest {
 
         assertEquals(
                 6,
-                instancia.getTemperaturaRepository().getTemperaturas().size(),
+                instancia.obtenerTemperaturas(HELADERA_ID).size(),
                 "Las temperaturas de una heladera no se guardan/recuperan correctamente");
     }
 

@@ -7,7 +7,6 @@ import ar.edu.utn.dds.k3003.model.Movimientos;
 import ar.edu.utn.dds.k3003.repositories.HeladeraRepository;
 import ar.edu.utn.dds.k3003.repositories.HeladeraMapper;
 import ar.edu.utn.dds.k3003.repositories.TemperaturaMapper;
-import ar.edu.utn.dds.k3003.repositories.TemperaturaRepository;
 import lombok.Getter;
 
 import ar.edu.utn.dds.k3003.facades.dtos.EstadoViandaEnum;
@@ -24,7 +23,6 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaHeladeras{
     private final HeladeraRepository heladeraRepository;
 
     private final TemperaturaMapper temperaturaMapper;
-    private final TemperaturaRepository temperaturaRepository;
 
     private FachadaViandas fachadaViandas;
 
@@ -32,7 +30,6 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaHeladeras{
         this.heladeraRepository = new HeladeraRepository();
         this.heladeraMapper = new HeladeraMapper();
         this.temperaturaMapper = new TemperaturaMapper();
-        this.temperaturaRepository = new TemperaturaRepository();
     }
 
     @Override
@@ -81,27 +78,22 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaHeladeras{
         this.fachadaViandas.modificarEstado(viandaDTO.getCodigoQR(), EstadoViandaEnum.RETIRADA);
     }
 
-    // desacople la mayor cantidad de logica, pero como tengo los repos separados, necesito validar
-    // si la heladera existe o no antes de guardar una temperatura de algo inexistente
     @Override
     public void temperatura(TemperaturaDTO temperatura) {
-        if (heladeraRepository.existHeladera(temperatura.getHeladeraId())) {
-            this.temperaturaRepository.save(
-                    this.temperaturaMapper.map(temperatura)
-            );
-        }
+        this.heladeraRepository.findById(temperatura.getHeladeraId())
+                .agregarTemperatura(this.temperaturaMapper.map(temperatura));
     }
+
 
     @Override
     public List<TemperaturaDTO> obtenerTemperaturas(Integer heladeraId) {
         return this.temperaturaMapper.convertirATemperaturasDTO(
-                    this.temperaturaRepository.findByHeladeraId(heladeraId)
+                    this.heladeraRepository.findById(heladeraId).getTemperaturas(), heladeraId
         );
     }
 
     public void purgarTodo(){
         this.heladeraRepository.purgar();
-        this.temperaturaRepository.purgar();
     }
 
     @Override

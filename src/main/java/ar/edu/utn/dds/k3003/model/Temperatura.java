@@ -15,35 +15,16 @@ import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class Temperatura {
-
-    @Min(0)
-    private Integer id;
 
     @NotNull
     private Integer temperatura;
 
     @NotNull
-    @Min(0)
-    private Integer heladeraId;
-
-    @NotNull
     private LocalDateTime fechaMedicion;
 
-    /* Murio este constructor
-    public Temperatura(Integer temperatura, Integer heladeraId){
-        this.id = null;
+    public Temperatura(Integer temperatura, LocalDateTime fechaMedicion){
         this.temperatura = temperatura;
-        this.heladeraId = heladeraId;
-        this.fechaMedicion = LocalDateTime.now();
-    }
-     */
-
-    public Temperatura(Integer temperatura, Integer heladeraId, LocalDateTime fechaMedicion){
-        this.id = null;
-        this.temperatura = temperatura;
-        this.heladeraId = heladeraId;
         this.fechaMedicion = fechaMedicion;
         validate();
     }
