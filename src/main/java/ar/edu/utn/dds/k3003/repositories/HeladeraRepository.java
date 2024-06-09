@@ -42,20 +42,6 @@ public class HeladeraRepository {
         return heladeras.size();
     }
 
-    public Boolean existHeladera(Integer heladeraId) {
-        if (heladeraId == null) {
-            throw new IllegalArgumentException("El identificador de la heladera no puede ser nulo.");
-        }
-
-        boolean exists = heladeras.stream()
-                .anyMatch(heladera -> Objects.equals(heladera.getId(), heladeraId));
-
-        if (!exists) {
-            throw new NoSuchElementException("No se encontró una heladera con el Id " + heladeraId);
-        }
-
-        return true;
-    }
 
     public void modifyHeladera(Heladera heladera) {
         Objects.requireNonNull(heladera.getId(), "El ID de la heladera no puede ser nulo");

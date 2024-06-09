@@ -5,6 +5,7 @@ import ar.edu.utn.dds.k3003.facades.dtos.HeladeraDTO;
 import ar.edu.utn.dds.k3003.presentation.auxiliar.ErrorResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
 
 import java.util.NoSuchElementException;
 
@@ -27,6 +28,9 @@ public class HeladerasController {
         }catch(IllegalArgumentException e) {
             ctx.status(HttpStatus.BAD_REQUEST);
             ctx.json(new ErrorResponse(1, e.getMessage()));
+        }catch(IllegalIdentifierException e) {
+            ctx.status(HttpStatus.NOT_ACCEPTABLE);
+            ctx.json(new ErrorResponse(2, e.getMessage()));
         }catch (Exception e) {
             ctx.status(HttpStatus.INTERNAL_SERVER_ERROR);
             ctx.json(new ErrorResponse(99, "Ups, hubo un error en el endpoint agregar: "+e));

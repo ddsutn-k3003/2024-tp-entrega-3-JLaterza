@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -14,6 +13,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -26,6 +26,7 @@ public class Heladera {
     @Min(0)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Integer id;
 
     @NotNull
@@ -33,39 +34,36 @@ public class Heladera {
     private String nombre;
 
     @Min(0)
-    @Column
+    @Column(name = "cantidad_de_viandas")
     private Integer cantidadDeViandas;
 
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE", name = "fecha_de_funcionamiento")
     private LocalDateTime fechaDeFuncionamiento;
 
-    @Column
+    @Column(name = "estado_operacional")
     private Boolean estadoOperacional;
 
-    @Column
-    private Float ultimaTemperaturaRegistrada;
+    @Column(name = "ultima_temperatura_registrada")
+    private Integer ultimaTemperaturaRegistrada;
 
-    @Column(columnDefinition = "DATE")
+    @Column(name = "ultima_apertura", columnDefinition = "DATE")
     private LocalDateTime ultimaApertura;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "ultimo_movimiento")
     private Movimientos ultimoMovimiento;
 
-    @Transient
-    private ArrayList<Temperatura> temperaturas;
+    @OneToMany(mappedBy = "heladera", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Temperatura> temperaturas;
 
-    public Heladera(){}
+    public Heladera() {}
 
     public Heladera(
             Integer id,
             String nombre,
             Integer cantidadDeViandas
-    ){
-        // Pequeña gran decision de diseño, si no controlo acá que es donde creo la heladera,
-        // no se donde delegar la responsabilidad de asignar la cantidad de viandas si no lo trae el DTO
-        // la asignacion del id es en el repo porque es autoincremental y viene con el tema de memoria
-        // por eso, no lo hago aca
-        if(cantidadDeViandas == null){
+    ) {
+        if (cantidadDeViandas == null) {
             cantidadDeViandas = 0;
         }
 
@@ -83,14 +81,9 @@ public class Heladera {
 
     public void agregarTemperatura(Temperatura temperatura) {
         this.temperaturas.add(0, temperatura);
+        temperatura.setHeladera(this); // Establecer la relación bidireccional
     }
 
-    // Otra pequeña gran decision de diseño...
-    // Si ponia la notacion de setters, me generaba tambien este setter en especifico;
-    // el problema es cuando viene un loco y me quiere sacar una vianda de una heladera con 0 viandas
-    // por mas que el qr este bien y toda la bola, es mi responsabilidad decir cuando se puede
-    // o no retirar una vianda; entonces si yo tengo una heladera y alguno colo un qr valido,
-    // el chiste es no dejar la heladera con -1 viandas....
     public void setCantidadDeViandas(Integer cantidadDeViandas) {
         if (cantidadDeViandas < 0) {
             throw new IllegalArgumentException("La cantidad de viandas no puede ser negativa.");
@@ -101,8 +94,6 @@ public class Heladera {
         this.cantidadDeViandas = cantidadDeViandas;
     }
 
-    // Muy seguramente cuando tenga que modelar el tema de los modelos de heladera
-    // Esto vuele, por el momento, me sirve para rebotar ids, nombres y viandas erroneas...
     private void validate() {
         Validator validator;
         try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -125,5 +116,4 @@ public class Heladera {
             throw new IllegalArgumentException(sb.toString());
         }
     }
-
 }

@@ -3,6 +3,8 @@ package ar.edu.utn.dds.k3003.repositories;
 import ar.edu.utn.dds.k3003.facades.dtos.TemperaturaDTO;
 import ar.edu.utn.dds.k3003.model.Temperatura;
 
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import java.util.List;
@@ -17,7 +19,9 @@ public class TemperaturaMapper {
     }
 
     public Temperatura map(TemperaturaDTO temperaturaDTO){
+
         return new Temperatura(
+                temperaturaDTO.getHeladeraId(),
                 temperaturaDTO.getTemperatura(),
                 temperaturaDTO.getFechaMedicion()
         );
