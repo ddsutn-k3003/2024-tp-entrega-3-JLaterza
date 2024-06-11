@@ -31,11 +31,11 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaHeladeras{
 
     private FachadaViandas fachadaViandas;
 
-    public Fachada(EntityManagerFactory entityManagerFactory){
+    public Fachada(){
         this.heladeraRepository = new HeladeraRepository();
         this.heladeraMapper = new HeladeraMapper();
         this.temperaturaMapper = new TemperaturaMapper();
-        this.heladeraRepositoryImpl = new HeladerasRepositoryImpl(entityManagerFactory);
+        this.heladeraRepositoryImpl = new HeladerasRepositoryImpl();
     }
 
     @Override

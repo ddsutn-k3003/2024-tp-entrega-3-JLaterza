@@ -10,23 +10,16 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.javalin.Javalin;
 import io.javalin.json.JavalinJackson;
 
-import javax.persistence.EntityManagerFactory;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import ar.edu.utn.dds.k3003.persistance.utils.PersistenceUtils;
-
 public class WebApp {
-
-    public static EntityManagerFactory entityManagerFactory;
 
     public static void main(String[] args) {
 
-        entityManagerFactory =  PersistenceUtils.createEntityManagerFactory();
-
         var env = System.getenv();
-        Fachada fachada = new Fachada(entityManagerFactory);
+        Fachada fachada = new Fachada();
 
         var objectMapper = createObjectMapper();
         fachada.setViandasProxy(new ViandasProxy(objectMapper));

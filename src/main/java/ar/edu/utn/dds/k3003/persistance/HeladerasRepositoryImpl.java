@@ -2,6 +2,7 @@ package ar.edu.utn.dds.k3003.persistance;
 
 import ar.edu.utn.dds.k3003.model.Heladera;
 import ar.edu.utn.dds.k3003.model.Temperatura;
+import ar.edu.utn.dds.k3003.persistance.utils.PersistenceUtils;
 import org.hibernate.boot.model.naming.IllegalIdentifierException;
 
 import javax.persistence.EntityManager;
@@ -11,12 +12,7 @@ import java.util.NoSuchElementException;
 
 public class HeladerasRepositoryImpl implements HeladerasRepository{
 
-    private static EntityManagerFactory emf;
-
-    public HeladerasRepositoryImpl (EntityManagerFactory entityManagerFactory){
-        super();
-        emf = entityManagerFactory;
-    }
+    private final static EntityManagerFactory emf =  PersistenceUtils.createEntityManagerFactory();
 
     @Override
     public Heladera save(Heladera heladera) {
