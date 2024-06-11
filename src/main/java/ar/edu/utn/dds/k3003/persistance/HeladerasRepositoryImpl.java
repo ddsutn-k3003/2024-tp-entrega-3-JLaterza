@@ -6,7 +6,6 @@ import org.hibernate.boot.model.naming.IllegalIdentifierException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import java.util.NoSuchElementException;
 
@@ -15,6 +14,7 @@ public class HeladerasRepositoryImpl implements HeladerasRepository{
     private static EntityManagerFactory emf;
 
     public HeladerasRepositoryImpl (EntityManagerFactory entityManagerFactory){
+        super();
         emf = entityManagerFactory;
     }
 

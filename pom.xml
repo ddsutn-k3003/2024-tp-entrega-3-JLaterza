@@ -106,7 +106,7 @@
     <dependency>
       <groupId>com.github.ezequieljsosa</groupId>
       <artifactId>dds-eval-tp2024</artifactId>
-      <version>0.0.21</version>
+      <version>0.0.22</version>
     </dependency>
 
     <dependency>
@@ -130,7 +130,6 @@
       <artifactId>javax.el</artifactId>
       <version>3.0.0</version>
     </dependency>
-
 
   </dependencies>
 

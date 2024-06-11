@@ -8,12 +8,14 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd" version="2.2">
         <class>ar.edu.utn.dds.k3003.model.Temperatura</class>
 
         <properties>
-            <!-- Creación de tablas -->
-            <property name="hibernate.flushMode" value="FLUSH_AUTO" />
-            <!-- Mostrar las sentencias de SQL por consola -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+            <property name="hibernate.default_schema" value="public"/>
+            <property name="hibernate.archive.autodetection" value="class" />
             <property name="hibernate.format_sql" value="true" />
-            <property name="hibernate.use_sql_comments" value="true" />
-
+            <property name="use_sql_comments" value="true" />
         </properties>
+
     </persistence-unit>
+
+
 </persistence>
