@@ -52,6 +52,12 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaHeladeras{
         );
     }
 
+    public HeladeraDTO buscarXNombre(String nombreHeladera) throws NoSuchElementException{
+        return this.heladeraMapper.map(
+                this.heladeraRepositoryImpl.getHeladeraByNombre(nombreHeladera)
+        );
+    }
+
     @Override
     public void depositar(Integer heladeraId, String qrVianda) throws NoSuchElementException {
         Heladera heladera = this.heladeraRepositoryImpl.getHeladeraById(heladeraId);

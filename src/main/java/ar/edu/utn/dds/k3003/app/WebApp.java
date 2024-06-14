@@ -51,6 +51,7 @@ public class WebApp {
 
         // MockController
         app.post("/mockheladeras", mockerController::mockHeladeras);
+        app.post("/mocktemperaturas", mockerController::mockTemperaturas);
 
         // CleanerController
         app.post("/clear", cleanerController::clear);

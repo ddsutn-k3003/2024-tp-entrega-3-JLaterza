@@ -7,6 +7,8 @@ import org.hibernate.boot.model.naming.IllegalIdentifierException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import java.util.NoSuchElementException;
 
@@ -47,6 +49,23 @@ public class HeladerasRepositoryImpl implements HeladerasRepository{
                 throw new NoSuchElementException("No se encontró una heladera con ID: " + id);
             }
             return heladera;
+        } finally {
+            em.close();
+        }
+    }
+
+    // Metodo propio del repo, veo si despues vale la pena llevarlo a la interfaz...
+    public Heladera getHeladeraByNombre(String nombre) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Heladera> query = em.createQuery(
+                    "SELECT h FROM Heladera h WHERE h.nombre = :nombre", Heladera.class);
+            query.setParameter("nombre", nombre);
+            Heladera heladera = query.getSingleResult(); // teoricamente, el nombre es unico
+
+            return heladera;
+        } catch (NoResultException e) {
+            throw new NoSuchElementException("No se encontró una heladera con el nombre: " + nombre);
         } finally {
             em.close();
         }
