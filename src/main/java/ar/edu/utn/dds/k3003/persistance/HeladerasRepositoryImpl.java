@@ -78,7 +78,7 @@ public class HeladerasRepositoryImpl implements HeladerasRepository{
     }
 
     @Override
-    public void clean() {
+    public void clear() {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         try {

@@ -14,7 +14,6 @@ import lombok.Getter;
 import ar.edu.utn.dds.k3003.facades.dtos.EstadoViandaEnum;
 import ar.edu.utn.dds.k3003.facades.dtos.ViandaDTO;
 
-import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -94,7 +93,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaHeladeras{
     }
 
     public void purgarTodo(){
-        this.heladeraRepositoryImpl.clean();
+        this.heladeraRepositoryImpl.clear();
     }
 
     @Override

@@ -5,15 +5,15 @@ import ar.edu.utn.dds.k3003.presentation.auxiliar.ErrorResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 
-public class PurgarController {
+public class CleanerController {
 
     private Fachada fachada;
 
-    public PurgarController(Fachada fachada){
+    public CleanerController(Fachada fachada){
         this.fachada = fachada;
     }
 
-    public void purgar(Context ctx){
+    public void clear(Context ctx){
         try{
             this.fachada.purgarTodo();
             ctx.status(HttpStatus.OK);

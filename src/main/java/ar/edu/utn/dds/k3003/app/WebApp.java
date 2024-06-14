@@ -34,7 +34,7 @@ public class WebApp {
         var viandasController = new ViandasController(fachada);
         var temperaturasController = new TemperaturasController(fachada);
         var mockerController = new MockerController(fachada);
-        var purgarController = new PurgarController(fachada);
+        var cleanerController = new CleanerController(fachada);
 
         // HeladerasController
         app.post("/heladeras", heladerasController::agregar);
@@ -52,8 +52,8 @@ public class WebApp {
         // MockController
         app.post("/mockheladeras", mockerController::mockHeladeras);
 
-        // PugarController
-        app.post("/purgar", purgarController::purgar);
+        // CleanerController
+        app.post("/clear", cleanerController::clear);
 
         app.get("/", ctx -> ctx.result("Hola, soy una API y no un easter egg."));
     }

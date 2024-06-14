@@ -30,7 +30,7 @@ public class Heladera {
     private Integer id;
 
     @NotNull
-    @Column
+    @Column(unique=true)
     private String nombre;
 
     @Min(0)

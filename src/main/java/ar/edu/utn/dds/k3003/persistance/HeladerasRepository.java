@@ -9,6 +9,6 @@ public interface HeladerasRepository {
     public Heladera save(Heladera heladera);
     public Heladera getHeladeraById(Integer id);
     public void modifyHeladera(Heladera heladera);
-    public void clean();
+    public void clear();
     public void agregarTemperatura(Temperatura temperatura);
 }
